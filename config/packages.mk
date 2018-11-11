@@ -24,6 +24,7 @@ PRODUCT_PACKAGES += \
     OmniJaws \
     Phonograph \
     Recorder \
+    PhoneLocationProvider \
     Simple-Gallery \
     Stk
 
