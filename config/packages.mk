@@ -16,7 +16,6 @@
 # Required packages
 PRODUCT_PACKAGES += \
     BluetoothExt \
-    Browser \
     Calendar \
     ExactCalculator \
     LatinIME \
@@ -26,7 +25,6 @@ PRODUCT_PACKAGES += \
     Phonograph \
     Recorder \
     Simple-Gallery \
-    stats \
     Stk
 
 # Themes Dark
