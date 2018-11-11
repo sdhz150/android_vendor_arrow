@@ -25,6 +25,7 @@ PRODUCT_PACKAGES += \
     Phonograph \
     Recorder \
     PhoneLocationProvider \
+    ForceStop \
     Simple-Gallery \
     Stk
 
