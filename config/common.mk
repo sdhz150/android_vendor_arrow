@@ -38,6 +38,20 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES +=  \
     vendor/arrow/prebuilt/common/media/location/suda-phonelocation.dat:system/media/location/suda-phonelocation.dat
 
+# LatinIME gesture typing
+ifeq ($(SUDA_CPU_ABI),arm64-v8a)
+PRODUCT_PACKAGES += \
+    GooglePinYin
+
+ PRODUCT_COPY_FILES += $(shell test -d vendor/arrow/prebuilt/app/GooglePinYin && \
+    find vendor/arrow/prebuilt/app/GooglePinYin -name '*.so' \
+    -printf '%p:system/app/GooglePinYin/lib/arm64/%f ')
+else
+PRODUCT_PACKAGES += \
+    LatinIME
+
+endif
+
 # Backup Tool
 ifeq ($(AB_OTA_UPDATER),true)
 PRODUCT_COPY_FILES += \

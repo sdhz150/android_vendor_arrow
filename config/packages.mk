@@ -18,7 +18,6 @@ PRODUCT_PACKAGES += \
     BluetoothExt \
     Calendar \
     ExactCalculator \
-    LatinIME \
     Launcher3 \
     messaging \
     OmniJaws \
