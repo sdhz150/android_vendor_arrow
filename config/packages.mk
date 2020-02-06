@@ -20,7 +20,6 @@ PRODUCT_PACKAGES += \
     Calendar \
     DuckDuckGo \
     ExactCalculator \
-    LatinIME \
     Launcher3QuickStep \
     messaging \
     OmniJaws \

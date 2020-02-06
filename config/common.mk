@@ -44,6 +44,19 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES +=  \
     vendor/arrow/prebuilt/common/media/location/suda-phonelocation.dat:system/media/location/suda-phonelocation.dat
 
+ifeq ($(SUDA_CPU_ABI),arm64-v8a)
+PRODUCT_PACKAGES += \
+    GooglePinYin
+
+PRODUCT_COPY_FILES += $(shell test -d vendor/arrow/prebuilt/common/app/GooglePinYin && \
+    find vendor/arrow/prebuilt/common/app/GooglePinYin -name '*.so' \
+    -printf '%p:system/app/GooglePinYin/lib/arm64/%f ')
+else
+# Required packages
+PRODUCT_PACKAGES += \
+    LatinIME
+endif
+
 # Backup Tool
 ifneq ($(AB_OTA_PARTITIONS),)
 PRODUCT_COPY_FILES += \
