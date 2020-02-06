@@ -31,6 +31,10 @@ PRODUCT_PACKAGES += \
     Stk \
     ThemePicker
 
+# LocationProvider
+PRODUCT_PACKAGES += \
+    PhoneLocationProvider
+
 # Accents
 PRODUCT_PACKAGES += \
     AccentColorYellowOverlay \

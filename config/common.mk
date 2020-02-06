@@ -40,6 +40,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/arrow/prebuilt/common/etc/init.local.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.arrow.rc
 
+# Phonelocation!
+PRODUCT_COPY_FILES +=  \
+    vendor/arrow/prebuilt/common/media/location/suda-phonelocation.dat:system/media/location/suda-phonelocation.dat
+
 # Backup Tool
 ifneq ($(AB_OTA_PARTITIONS),)
 PRODUCT_COPY_FILES += \
