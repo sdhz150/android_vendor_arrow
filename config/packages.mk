@@ -18,6 +18,7 @@ PRODUCT_PACKAGES += \
     ArrowThemesStub \
     BluetoothExt \
     Calendar \
+    Eleven \
     ExactCalculator \
     Launcher3QuickStep \
     messaging \
