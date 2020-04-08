@@ -22,7 +22,8 @@ PRODUCT_PACKAGE_OVERLAYS += \
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
     vendor/arrow/overlay/common \
-    vendor/arrow/overlay/themes/ArrowIcons
+    vendor/arrow/overlay/themes/ArrowIcons \
+    vendor/arrow/overlay/lawnchair
 
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
@@ -63,19 +64,23 @@ PRODUCT_PACKAGES += \
 endif
 
 # Backup Tool
-ifneq ($(AB_OTA_PARTITIONS),)
-PRODUCT_COPY_FILES += \
-    vendor/arrow/build/tools/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
-    vendor/arrow/build/tools/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
-    vendor/arrow/build/tools/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
-endif
-
 PRODUCT_COPY_FILES += \
     vendor/arrow/build/tools/backuptool.sh:install/bin/backuptool.sh \
     vendor/arrow/build/tools/backuptool.functions:install/bin/backuptool.functions \
     vendor/arrow/build/tools/50-cm.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-cm.sh
 
-# system mount
+ifneq ($(AB_OTA_PARTITIONS),)
+PRODUCT_COPY_FILES += \
+    vendor/arrow/build/tools/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
+    vendor/arrow/build/tools/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
+    vendor/arrow/build/tools/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
+ifneq ($(TARGET_BUILD_VARIANT),user)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.ota.allow_downgrade=true
+endif
+endif
+
+# System mount
 PRODUCT_COPY_FILES += \
     vendor/arrow/build/tools/system-mount.sh:install/bin/system-mount.sh
 
@@ -98,6 +103,15 @@ PRODUCT_COPY_FILES += \
 ifeq ($(ARROW_GAPPS),)
 PRODUCT_COPY_FILES += \
     vendor/arrow/config/permissions/privapp-permissions-elgoog.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-elgoog.xml
+endif
+
+# Lawnchair
+ifeq ($(TARGET_EXCLUDE_LAWNCHAIR),)
+PRODUCT_PACKAGE_OVERLAYS += vendor/arrow/overlay/lawnchair
+
+PRODUCT_COPY_FILES += \
+    vendor/arrow/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lawnchair.xml \
+    vendor/arrow/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
 endif
 
 # Do not include art debug targets

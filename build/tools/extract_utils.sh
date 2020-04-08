@@ -1190,7 +1190,7 @@ function oat2dex() {
     local SRC="$3"
     local TARGET=
     local OAT=
-    local HOST="$(uname)"
+    local HOST="$(uname | tr '[:upper:]' '[:lower:]')"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
         export BAKSMALIJAR="$ARROW_ROOT"/prebuilts/tools-extras/common/smali/baksmali.jar
@@ -1198,11 +1198,11 @@ function oat2dex() {
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$ARROW_ROOT"/prebuilts/tools-extras/"${HOST,,}"-x86/bin/vdexExtractor
+        export VDEXEXTRACTOR="$ARROW_ROOT"/prebuilts/tools-extras/${HOST}-x86/bin/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$ARROW_ROOT"/prebuilts/tools-extras/"${HOST,,}"-x86/bin/compact_dex_converter
+        export CDEXCONVERTER="$ARROW_ROOT"/prebuilts/tools-extras/${HOST}-x86/bin/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -1533,8 +1533,8 @@ function extract() {
         fi
 
         # Strip the file path in the vendor repo of "system", if present
-        local VENDOR_REPO_FILE="$OUTPUT_DIR/${DST_FILE#/system}"
         local BLOB_DISPLAY_NAME="${DST_FILE#/system/}"
+        local VENDOR_REPO_FILE="$OUTPUT_DIR/${BLOB_DISPLAY_NAME}"
         mkdir -p $(dirname "${VENDOR_REPO_FILE}")
 
         # Check pinned files
@@ -1590,6 +1590,7 @@ function extract() {
         if [[ "$FULLY_DEODEXED" -ne "1" && "${VENDOR_REPO_FILE}" =~ .(apk|jar)$ ]]; then
             oat2dex "${VENDOR_REPO_FILE}" "${SRC_FILE}" "$SRC"
             if [ -f "$TMPDIR/classes.dex" ]; then
+                touch -t 200901010000 "$TMPDIR/classes"*
                 zip -gjq "${VENDOR_REPO_FILE}" "$TMPDIR/classes"*
                 rm "$TMPDIR/classes"*
                 printf '    (updated %s from odex files)\n' "${SRC_FILE}"

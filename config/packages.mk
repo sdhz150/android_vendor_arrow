@@ -34,6 +34,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     PhoneLocationProvider
 
+ifeq ($(TARGET_EXCLUDE_LAWNCHAIR),)
+PRODUCT_PACKAGES += \
+    Lawnchair \
+    LawnConf
+endif
+
 # Accents
 PRODUCT_PACKAGES += \
     AccentColorYellowOverlay \
